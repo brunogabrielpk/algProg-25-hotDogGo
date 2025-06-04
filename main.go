@@ -21,14 +21,17 @@ import "fmt"
 func main() {
 	var opcaoUserMenu int
 	var userConfirma string
+	precoCustolHotDog := 0.0
+	precoVendaHotDog := 0.0
 	// sn := false
-	margemLucro := 2.0
+	margemLucro := 150.0
 	itensHD := [8]string{"Pão", "Molho", "Salsicha", "Ervilha", "Milho", "Bacon", "Calabresa", "Purê"}
-	//itensHDvalor := [8]float64{1.0, 0.5, 1.0, 0.25, 0.25, 2.0, 1.5, 1.0}
+	itensHDvalor := [8]float64{1.0, 0.5, 1.0, 0.25, 0.25, 2.0, 1.5, 1.0}
 	itensHDconfirma := [8]bool{true, true, true, false, false, false, false, false}
 
 	// Mostrar o menu para o usuários
 	for {
+		fmt.Println("##############################################################")
 		fmt.Println("Bem vindo ao sistem de pedidos HOTDOGS-ENGENHARIA-AEMS")
 		fmt.Println("Selecione o número da opção desejada")
 		fmt.Println("[1] - Pedir um Hot-Dog")
@@ -48,6 +51,26 @@ func main() {
 					} else {
 						itensHDconfirma[pos] = false
 					}
+				}
+			}
+			// Calcula valor total do hot-dog
+			for pos, itemValor := range itensHDvalor {
+				// verifica se o item faz parte do hot-dog e adiciona ao valor final
+				if itensHDconfirma[pos] == true {
+					precoCustolHotDog += itemValor
+				}
+			}
+			// aplica margem de lucro no preço de custo
+			precoVendaHotDog = precoCustolHotDog * (1.0 + (margemLucro / 100.0))
+
+			// Mostra o preço de venda do hot-dog
+			fmt.Println("##########################################")
+			fmt.Printf("Valor total do pedido: R$ %0.2f\n", precoVendaHotDog)
+
+			//listagem de items no hot-dog
+			for pos, item := range itensHD {
+				if itensHDconfirma[pos] == true {
+					fmt.Println(item)
 				}
 			}
 		} else if opcaoUserMenu == 2 {
